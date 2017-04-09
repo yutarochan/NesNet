@@ -29,7 +29,7 @@ function initMap(latitude, longitude) {
 
         $.ajax({
             url: "https://e01b0067.ngrok.io/SafeNess/index.php?lat="+latitude+"&lon="+longitude+"&rad=1&key=eb6065587d974500fa01af34b0cce99b",
-            dataType: "json"
+            dataType: "jsonp"
         }).done(function(loc_data) {
             for (var i=0; i < loc_data['data'].length; i++) {
                 var marker = new google.maps.Marker({
