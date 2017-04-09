@@ -6,9 +6,9 @@ function openMap(lat, lon) {
     if( (navigator.platform.indexOf("iPhone") != -1)
         || (navigator.platform.indexOf("iPod") != -1)
         || (navigator.platform.indexOf("iPad") != -1))
-         window.open("maps://http://maps.apple.com/maps?q="+lat+","+lon);
+         window.open("maps://https://maps.apple.com/maps?q="+lat+","+lon);
     else
-         window.open("http://maps.google.com/maps?daddr="+lat+","+lon);
+         window.open("https://maps.google.com/maps?daddr="+lat+","+lon);
 }
 
 // Google Map Handler
@@ -28,7 +28,7 @@ function initMap(latitude, longitude) {
         });
 
         $.ajax({
-            url: "http://api.reimaginebanking.com/atms?lat="+latitude+"&lng="+longitude+"&rad=1&key=eb6065587d974500fa01af34b0cce99b"
+            url: "https://api.reimaginebanking.com/atms?lat="+latitude+"&lng="+longitude+"&rad=1&key=eb6065587d974500fa01af34b0cce99b"
         }).done(function(loc_data) {
             for (var i=0; i < loc_data['data'].length; i++) {
                 var marker = new google.maps.Marker({
