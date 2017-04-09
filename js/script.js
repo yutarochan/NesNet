@@ -28,7 +28,7 @@ function initMap(latitude, longitude) {
         });
 
         $.ajax({
-            url: "https://api.reimaginebanking.com/atms?lat="+latitude+"&lng="+longitude+"&rad=1&key=eb6065587d974500fa01af34b0cce99b"
+            url: "http://api.reimaginebanking.com/atms?lat="+latitude+"&lng="+longitude+"&rad=1&key=eb6065587d974500fa01af34b0cce99b"
         }).done(function(loc_data) {
             for (var i=0; i < loc_data['data'].length; i++) {
                 var marker = new google.maps.Marker({
