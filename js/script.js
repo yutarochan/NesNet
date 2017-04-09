@@ -1,5 +1,5 @@
 var map;
-var geo_loc = true;
+var geo_loc = false;
 
 function openMap(lat, lon) {
     // If it's an iPhone..
@@ -28,7 +28,7 @@ function initMap(latitude, longitude) {
         });
 
         $.ajax({
-            url: "http://api.reimaginebanking.com/atms?lat="+latitude+"&lng="+longitude+"&rad=1&key=eb6065587d974500fa01af34b0cce99b"
+            url: "https://api.reimaginebanking.com/atms?lat="+latitude+"&lng="+longitude+"&rad=1&key=eb6065587d974500fa01af34b0cce99b"
         }).done(function(loc_data) {
             for (var i=0; i < loc_data['data'].length; i++) {
                 var marker = new google.maps.Marker({
@@ -41,7 +41,7 @@ function initMap(latitude, longitude) {
                 });
 
                 $.ajax({
-                    url: "http://api.spotcrime.com/crimes.json",
+                    url: "https://api.spotcrime.com/crimes.json",
                     data: {
                         lat: loc_data['data'][i]['geocode']['lat'],
                         lon: loc_data['data'][i]['geocode']['lng'],
