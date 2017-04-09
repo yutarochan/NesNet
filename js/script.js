@@ -1,5 +1,5 @@
 var map;
-var geo_loc = true;
+var geo_loc = false;
 
 function openMap(lat, lon) {
     // If it's an iPhone..
