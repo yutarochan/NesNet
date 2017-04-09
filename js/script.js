@@ -1,10 +1,15 @@
-/*
-Parking Map
-Developed by: Yuya Jeremy Ong (yuyajeremyong@gmail.com)
-*/
-
 var map;
 var geo_loc = false;
+
+function openMap(lat, lon) {
+    // If it's an iPhone..
+    if( (navigator.platform.indexOf("iPhone") != -1)
+        || (navigator.platform.indexOf("iPod") != -1)
+        || (navigator.platform.indexOf("iPad") != -1))
+         window.open("maps://http://maps.apple.com/maps?q="+lat+","+lon);
+    else
+         window.open("http://maps.google.com/maps?daddr="+lat+","+lon);
+}
 
 // Google Map Handler
 function initMap(latitude, longitude) {
@@ -24,17 +29,45 @@ function initMap(latitude, longitude) {
 
         $.ajax({
             url: "http://api.reimaginebanking.com/atms?lat="+latitude+"&lng="+longitude+"&rad=1&key=eb6065587d974500fa01af34b0cce99b"
-        }).done(function(data) {
-            for (var i=0; i < data['data'].length; i++) {
+        }).done(function(loc_data) {
+            for (var i=0; i < loc_data['data'].length; i++) {
                 var marker = new google.maps.Marker({
-                    position: {lat:data['data'][i]['geocode']['lat'], lng:data['data'][i]['geocode']['lng']},
-                    map: map
+                    position: {lat:loc_data['data'][i]['geocode']['lat'], lng:loc_data['data'][i]['geocode']['lng']},
+                    map: map,
+                    icon: {
+                        url: 'img/cap_one.png',
+                        scaledSize: new google.maps.Size(30, 30)
+                    }
                 });
-                // console.log(data['data'][i]['name']);
+
+                $.ajax({
+                    url: "http://api.spotcrime.com/crimes.json",
+                    data: {
+                        lat: loc_data['data'][i]['geocode']['lat'],
+                        lon: loc_data['data'][i]['geocode']['lng'],
+                        key: "privatekeyforspotcrimepublicusers-commercialuse-877.410.1607",
+                        radius: 0.03
+                    },
+                    dataType: 'jsonp',
+                    lat: loc_data['data'][i]['geocode']['lat'],
+                    lon: loc_data['data'][i]['geocode']['lng'],
+                    name: loc_data['data'][i]['name'],
+                    index: i,
+                    success: function(d) {
+
+                        var safety = "";
+                        if (d['crimes'].length <= 10)
+                            safety = "<span class='badge new black-text'>SAFEST</span></a>";
+                        else if (10 < d['crimes'].length && d['crimes'].length <= 25)
+                            safety = "<span class='badge new black-text yellow'>MODERATE</span></a>"
+                        else
+                            safety = "<span class='badge new black-text red'>STAY ALERT</span></a>"
+
+                        $(".collection").append("<a class='black-text collection-item' onclick='openMap("+this.lat+","+this.lon+")'>"+this.name+safety);
+                    }
+                });
             }
         });
-
-        console.log(position.coords.latitude+' '+position.coords.longitude);
     });
 }
 
