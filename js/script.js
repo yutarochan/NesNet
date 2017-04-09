@@ -1,5 +1,5 @@
 var map;
-var geo_loc = false;
+var geo_loc = true;
 
 function openMap(lat, lon) {
     // If it's an iPhone..
@@ -46,7 +46,7 @@ function initMap(latitude, longitude) {
                         lat: loc_data['data'][i]['geocode']['lat'],
                         lon: loc_data['data'][i]['geocode']['lng'],
                         key: "privatekeyforspotcrimepublicusers-commercialuse-877.410.1607",
-                        radius: 0.03
+                        radius: 0.01
                     },
                     dataType: 'jsonp',
                     lat: loc_data['data'][i]['geocode']['lat'],
